@@ -6,6 +6,7 @@ import { requestLogger } from './middleware/request-logger.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { healthRouter } from './routes/health.js';
 import { usersRouter } from './routes/users.js';
+import { muscleGroupRouter } from './routes/muscleGroup.js';
 import { testRouter } from './routes/test.js';
 import { API_VERSION } from '@repo/shared';
 
@@ -33,6 +34,7 @@ export function createApp(): express.Express {
   app.use(`${apiPrefix}/health`, healthRouter);
   app.use(`${apiPrefix}/users`, usersRouter);
   app.use(`${apiPrefix}/test`, testRouter);
+  app.use(`${apiPrefix}/muscle-groups`, muscleGroupRouter)
 
   // Error handling — must be last
   app.use(errorHandler);

@@ -6,6 +6,13 @@ export interface User {
   updatedAt: string;
 }
 
+export interface MuscleGroup {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
