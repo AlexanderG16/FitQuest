@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import type { User } from '@repo/shared';
+import type { MuscleGroup, User } from '@repo/shared';
 
 const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'http://localhost:4000/api/v1';
 
@@ -29,7 +29,9 @@ export default function TestPage() {
   const [results, setResults] = useState<TestResult[]>([]);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [muscleName, setMuscleName ] = useState('');
   const [createdUsers, setCreatedUsers] = useState<User[]>([]);
+  const [createdMuscles, setCreatedMuscles] = useState<MuscleGroup[]>([]);
   const resultsEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -108,6 +110,30 @@ export default function TestPage() {
       apiCall('/users', { method: 'POST', body: JSON.stringify({ name: '', email: 'bad' }) }),
     );
 
+  const testCreateMuscleGroup = async () => {
+    const name = muscleName.trim() || 'Test Muscle';
+    const result = await runTest(`POST /muscle-groups (${name})`, () =>
+      apiCall('/muscle-groups', { method: 'POST', body: JSON.stringify({ name }) }),
+    );
+    if (result?.ok && result.body) {
+      const data = result.body as { data: MuscleGroup };
+      setCreatedMuscles((prev) => [...prev, data.data]);
+    }
+  };
+  const testListMuscleGroups = () => runTest('GET /muscle-groups', () => apiCall('/muscle-groups'));
+  const testGetMuscleGroup = (muscleGroup: MuscleGroup) =>
+    runTest(`GET /muscle-groups/${muscleGroup.id.slice(0, 8)}…`, () => apiCall(`/muscle-groups/${muscleGroup.id}`));
+  const testUpdateMuscleGroup = (muscleGroup: MuscleGroup) =>
+    runTest(`PATCH /muscleGroups/${muscleGroup.id.slice(0, 8)}…`, () =>
+      apiCall(`/muscleGroups/${muscleGroup.id}`, { method: 'PATCH', body: JSON.stringify({ name: `${muscleGroup.name} (updated)` }) }),
+    );
+  // const testBatchDeleteMuscleGroups = async (muscleGroups: MuscleGroup[]) => {
+  //   const result = await runTest(`DELETE /muscle-groups?ids=${muscleGroups.map((muscle) => muscle.id)}…`, () =>
+  //     apiCall(`/muscle-groups?ids=${muscleGroups.map((muscle) => muscle.id)}`, { method: 'DELETE' }),
+  //   );
+  //   if (result?.ok) setCreatedMuscles((prev) => prev.filter((u) => !muscleGroups.some((mg) => mg.id === u.id)));
+  // };
+
   const runAllTests = async () => {
     setResults([]);
     setCreatedUsers([]);
@@ -118,6 +144,8 @@ export default function TestPage() {
     await testSimulatedError();
     await testCreateUser();
     await testListUsers();
+    await testCreateMuscleGroup();
+    await testListMuscleGroups();
     await testGetNotFound();
     await testInvalidCreate();
   };
@@ -170,6 +198,32 @@ export default function TestPage() {
                   <button onClick={() => testGetUser(user)} style={sm('#3b82f6')}>GET</button>
                   <button onClick={() => testUpdateUser(user)} style={sm('#f59e0b')}>PATCH</button>
                   <button onClick={() => testDeleteUser(user)} style={sm('#ef4444')}>DEL</button>
+                </div>
+              ))}
+            </div>
+          </Section>
+        )}
+        
+        <Section title="Muscle Groups CRUD">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', marginBottom: '0.5rem' }}>
+            <input placeholder="Name" value={muscleName} onChange={(e) => setMuscleName(e.target.value)} style={input} />
+          </div>
+          <button onClick={testCreateMuscleGroup} style={btn('#10b981')}>Create</button>
+          <button onClick={testListMuscleGroups} style={btn('#3b82f6')}>List</button>
+          <button onClick={testGetNotFound} style={btn('#ef4444')}>404</button>
+          <button onClick={testInvalidCreate} style={btn('#ef4444')}>Invalid</button>
+        </Section>
+
+        {createdMuscles.length > 0 && (
+          <Section title={`Muscle Groups (${createdMuscles.length})`}>
+            <div style={{ width: '100%' }}>
+              {createdMuscles.map((muscleGroup) => (
+                <div key={muscleGroup.id} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0', borderBottom: '1px solid #222', fontSize: '0.8rem' }}>
+                  <span style={{ color: '#aaa', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {muscleGroup.name}
+                  </span>
+                  <button onClick={() => testGetMuscleGroup(muscleGroup)} style={sm('#3b82f6')}>GET</button>
+                  <button onClick={() => testUpdateMuscleGroup(muscleGroup)} style={sm('#f59e0b')}>PATCH</button>
                 </div>
               ))}
             </div>
