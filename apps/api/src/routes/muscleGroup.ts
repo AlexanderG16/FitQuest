@@ -26,7 +26,7 @@ const createMuscleGroupSchema = z.object({
 })
 
 const updateMuscleGroupSchema = z.object({
-    name: z.string().min(1).max(100),
+    name: z.string().min(1).max(100).optional(),
 })
 
 const batchDeleteMuscleGroupSchema = z.object({
