@@ -31,4 +31,4 @@ const muscleGroupSchema = new Schema<IMuscleGroup>(
     }
 );
 
-export const MuscleGroupModel = mongoose.model<IMuscleGroup>('Muscle Group', muscleGroupSchema)
+export const MuscleGroupModel = mongoose.model<IMuscleGroup>('MuscleGroup', muscleGroupSchema)
