@@ -9,6 +9,7 @@ import { usersRouter } from './routes/users.js';
 import { muscleGroupRouter } from './routes/muscleGroup.js';
 import { testRouter } from './routes/test.js';
 import { API_VERSION } from '@repo/shared';
+import { exercisesRouter } from './routes/exercise.js';
 
 export function createApp(): express.Express {
   const app = express();
@@ -35,6 +36,7 @@ export function createApp(): express.Express {
   app.use(`${apiPrefix}/users`, usersRouter);
   app.use(`${apiPrefix}/test`, testRouter);
   app.use(`${apiPrefix}/muscle-groups`, muscleGroupRouter)
+  app.use(`${apiPrefix}/exercises`, exercisesRouter)
 
   // Error handling — must be last
   app.use(errorHandler);
