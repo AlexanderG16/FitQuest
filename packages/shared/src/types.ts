@@ -13,6 +13,15 @@ export interface MuscleGroup {
   updatedAt: string;
 }
 
+export interface Exercise {
+  id: string;
+  name: string;
+  primary_muscle_id: string;
+  secondary_muscle_ids: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
