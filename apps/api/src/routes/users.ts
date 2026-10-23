@@ -73,7 +73,9 @@ router.get('/:id', async (req, res, next) => {
     // Try cache first
     const cached = await cache.get<User>(`user:${id}`);
     if (cached) {
-      res.json({ success: true, data: cached, _cached: true } as ApiResponse<User> & { _cached: boolean });
+      res.json({ success: true, data: cached, _cached: true } as ApiResponse<User> & {
+        _cached: boolean;
+      });
       return;
     }
 
@@ -134,7 +136,11 @@ router.patch('/:id', validate({ body: updateUserSchema }), async (req, res, next
       }
     }
 
-    const doc = await UserModel.findByIdAndUpdate(id, { $set: updates }, { new: true, runValidators: true });
+    const doc = await UserModel.findByIdAndUpdate(
+      id,
+      { $set: updates },
+      { new: true, runValidators: true },
+    );
     if (!doc) {
       throw new AppError(HTTP_STATUS.NOT_FOUND, 'User not found');
     }

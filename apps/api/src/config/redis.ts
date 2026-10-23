@@ -49,7 +49,11 @@ export async function connectRedis(): Promise<void> {
 
 export async function disconnectRedis(): Promise<void> {
   if (redis) {
-    try { await redis.quit(); } catch { /* ignore */ }
+    try {
+      await redis.quit();
+    } catch {
+      /* ignore */
+    }
     redis = null;
     available = false;
   }

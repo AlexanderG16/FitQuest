@@ -6,7 +6,11 @@ const router: RouterType = Router();
 
 // Echo back whatever is sent
 router.post('/echo', (req, res) => {
-  const response: ApiResponse<{ headers: Record<string, string | string[] | undefined>; body: unknown; timestamp: string }> = {
+  const response: ApiResponse<{
+    headers: Record<string, string | string[] | undefined>;
+    body: unknown;
+    timestamp: string;
+  }> = {
     success: true,
     data: {
       headers: req.headers,

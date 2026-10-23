@@ -4,14 +4,14 @@ A production-ready monorepo template with **Next.js 15** frontend, **Express 5**
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Next.js 15, React 19, Tailwind CSS 4, TypeScript |
-| Backend | Express 5, Zod validation, Pino logger, Helmet |
-| Database | MongoDB (Mongoose ODM) |
-| Cache | Redis (ioredis) — optional, graceful fallback |
-| Monorepo | Turborepo, pnpm workspaces |
-| Build | TypeScript 5, Turbopack (dev), Docker multi-stage |
+| Layer    | Technology                                        |
+| -------- | ------------------------------------------------- |
+| Frontend | Next.js 15, React 19, Tailwind CSS 4, TypeScript  |
+| Backend  | Express 5, Zod validation, Pino logger, Helmet    |
+| Database | MongoDB (Mongoose ODM)                            |
+| Cache    | Redis (ioredis) — optional, graceful fallback     |
+| Monorepo | Turborepo, pnpm workspaces                        |
+| Build    | TypeScript 5, Turbopack (dev), Docker multi-stage |
 
 ## Project Structure
 
@@ -57,8 +57,8 @@ A production-ready monorepo template with **Next.js 15** frontend, **Express 5**
 - **Node.js** >= 20.0.0 ([install via nvm](https://github.com/nvm-sh/nvm))
 - **pnpm** >= 9.0.0 (`corepack enable && corepack prepare pnpm@9.15.0 --activate`)
 - **MongoDB** — local install, Docker, or [MongoDB Atlas](https://www.mongodb.com/atlas) (free tier)
-- **Redis** *(optional)* — local install, Docker, or [Redis Cloud](https://redis.com/try-free/) (free tier)
-- **Docker** *(optional)* — for containerized deployment
+- **Redis** _(optional)_ — local install, Docker, or [Redis Cloud](https://redis.com/try-free/) (free tier)
+- **Docker** _(optional)_ — for containerized deployment
 
 ## Getting Started
 
@@ -132,21 +132,22 @@ pnpm dev
 ```
 
 This starts both apps concurrently:
+
 - **Frontend**: http://localhost:3000
 - **API**: http://localhost:4000
 - **Test Dashboard**: http://localhost:3000/test
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start all apps in development mode |
-| `pnpm build` | Build all packages and apps |
-| `pnpm lint` | Lint all packages |
-| `pnpm typecheck` | Type-check all packages |
-| `pnpm format` | Format code with Prettier |
-| `pnpm format:check` | Check code formatting |
-| `pnpm clean` | Remove build outputs |
+| Command             | Description                        |
+| ------------------- | ---------------------------------- |
+| `pnpm dev`          | Start all apps in development mode |
+| `pnpm build`        | Build all packages and apps        |
+| `pnpm lint`         | Lint all packages                  |
+| `pnpm typecheck`    | Type-check all packages            |
+| `pnpm format`       | Format code with Prettier          |
+| `pnpm format:check` | Check code formatting              |
+| `pnpm clean`        | Remove build outputs               |
 
 ### Run commands for specific apps
 
@@ -161,23 +162,23 @@ pnpm --filter @repo/shared build # Build shared package
 
 ### Health & Info
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/v1/health` | Health check with MongoDB status |
-| GET | `/api/v1/test/info` | Server info (Node version, memory, uptime) |
-| POST | `/api/v1/test/echo` | Echo back request headers and body |
-| GET | `/api/v1/test/delay/:ms` | Simulated delay (max 5s) |
-| GET | `/api/v1/test/error/:code` | Simulated HTTP error |
+| Method | Endpoint                   | Description                                |
+| ------ | -------------------------- | ------------------------------------------ |
+| GET    | `/api/v1/health`           | Health check with MongoDB status           |
+| GET    | `/api/v1/test/info`        | Server info (Node version, memory, uptime) |
+| POST   | `/api/v1/test/echo`        | Echo back request headers and body         |
+| GET    | `/api/v1/test/delay/:ms`   | Simulated delay (max 5s)                   |
+| GET    | `/api/v1/test/error/:code` | Simulated HTTP error                       |
 
 ### Users CRUD
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/v1/users` | List users (paginated: `?page=1&pageSize=20`) |
-| GET | `/api/v1/users/:id` | Get user by ID (Redis cached if available) |
-| POST | `/api/v1/users` | Create user (`{ name, email }`) |
-| PATCH | `/api/v1/users/:id` | Update user (`{ name?, email? }`) |
-| DELETE | `/api/v1/users/:id` | Delete user |
+| Method | Endpoint            | Description                                   |
+| ------ | ------------------- | --------------------------------------------- |
+| GET    | `/api/v1/users`     | List users (paginated: `?page=1&pageSize=20`) |
+| GET    | `/api/v1/users/:id` | Get user by ID (Redis cached if available)    |
+| POST   | `/api/v1/users`     | Create user (`{ name, email }`)               |
+| PATCH  | `/api/v1/users/:id` | Update user (`{ name?, email? }`)             |
+| DELETE | `/api/v1/users/:id` | Delete user                                   |
 
 ## Test Dashboard
 
@@ -221,6 +222,7 @@ Shared TypeScript types, constants, and utilities used by both frontend and back
 ### `@repo/eslint-config`
 
 Shared ESLint flat configs:
+
 - `base` — TypeScript rules
 - `next` — Next.js specific rules
 - `node` — Node.js backend rules
@@ -228,6 +230,7 @@ Shared ESLint flat configs:
 ### `@repo/typescript-config`
 
 Shared `tsconfig` presets:
+
 - `base.json` — strict TypeScript defaults
 - `next.json` — Next.js optimized config
 - `node.json` — Node.js backend config

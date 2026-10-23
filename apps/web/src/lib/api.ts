@@ -45,8 +45,7 @@ export const api = {
       body: JSON.stringify(body),
     }),
 
-  delete: (path: string) =>
-    request(path, { method: 'DELETE' }),
+  delete: (path: string) => request(path, { method: 'DELETE' }),
 };
 
 export { ApiError };

@@ -23,12 +23,8 @@ export default async function HealthPage() {
         padding: '4rem 1rem',
       }}
     >
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-        Monorepo App
-      </h1>
-      <p style={{ color: '#666', marginBottom: '2rem' }}>
-        Next.js frontend + Express API backend
-      </p>
+      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>Monorepo App</h1>
+      <p style={{ color: '#666', marginBottom: '2rem' }}>Next.js frontend + Express API backend</p>
 
       <div
         style={{
@@ -49,9 +45,7 @@ export default async function HealthPage() {
             <p>Version: {health.version}</p>
           </div>
         ) : (
-          <p style={{ color: '#ef4444' }}>
-            API is not reachable. Start it with: pnpm dev
-          </p>
+          <p style={{ color: '#ef4444' }}>API is not reachable. Start it with: pnpm dev</p>
         )}
       </div>
 

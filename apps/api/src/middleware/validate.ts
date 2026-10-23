@@ -35,39 +35,38 @@ export function validateDocId(id: string, model: string): RequestHandler {
   return (_req, _res, next) => {
     try {
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw new AppError(HTTP_STATUS.BAD_REQUEST, `Invalid ${model} ID`)
+        throw new AppError(HTTP_STATUS.BAD_REQUEST, `Invalid ${model} ID`);
       }
 
       next();
     } catch (err) {
       next(err);
     }
-  }
+  };
 }
 
 export function validateMusclesExists(schemas: ValidationSchemas): RequestHandler {
   return async (req, _res, next) => {
     try {
       if (schemas.body) {
-        req.body = schemas.body.parse(req.body)
+        req.body = schemas.body.parse(req.body);
         const parsed = createExerciseSchema.safeParse(req.body).success
           ? createExerciseSchema.parse(req.body)
           : updatedExerciseSchema.parse(req.body);
-   
+
         const allMuscleIds = [parsed.primary_muscle_id, ...(parsed.secondary_muscle_ids || [])];
 
         // Refactored: Make the function async and await MuscleGroupModel.find, then check the result.
         const muscles = await MuscleGroupModel.find({
-          _id: { $in: allMuscleIds.map((m) => new mongoose.Types.ObjectId(m))}
+          _id: { $in: allMuscleIds.map((m) => new mongoose.Types.ObjectId(m)) },
         });
         if (!muscles || muscles.length !== allMuscleIds.length) {
-
-          throw new AppError(HTTP_STATUS.NOT_FOUND, "Muscle groups not found")
+          throw new AppError(HTTP_STATUS.NOT_FOUND, 'Muscle groups not found');
         }
       }
       next();
     } catch (err) {
       next(err);
     }
-  }
+  };
 }

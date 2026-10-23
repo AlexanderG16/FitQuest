@@ -35,8 +35,8 @@ export function createApp(): express.Express {
   app.use(`${apiPrefix}/health`, healthRouter);
   app.use(`${apiPrefix}/users`, usersRouter);
   app.use(`${apiPrefix}/test`, testRouter);
-  app.use(`${apiPrefix}/muscle-groups`, muscleGroupRouter)
-  app.use(`${apiPrefix}/exercises`, exercisesRouter)
+  app.use(`${apiPrefix}/muscle-groups`, muscleGroupRouter);
+  app.use(`${apiPrefix}/exercises`, exercisesRouter);
 
   // Error handling — must be last
   app.use(errorHandler);
